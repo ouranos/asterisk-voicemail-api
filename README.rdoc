@@ -1,0 +1,59 @@
+= Asterisk Voicemail API
+Simple REST API for Asterisk Voicemail
+
+== Requirements
+
+You should have an Asterisk database with the following tables :
+
+  DESCRIBE voicemessages;
+
+  +----------------+-------------+------+-----+---------+----------------+
+  | Field          | Type        | Null | Key | Default | Extra          |
+  +----------------+-------------+------+-----+---------+----------------+
+  | id             | int(11)     | NO   | PRI | NULL    | auto_increment |
+  | msgnum         | int(11)     | NO   |     | 0       |                |
+  | dir            | varchar(80) | YES  | MUL |         |                |
+  | context        | varchar(80) | YES  |     |         |                |
+  | macrocontext   | varchar(80) | YES  |     |         |                |
+  | callerid       | varchar(40) | YES  |     |         |                |
+  | origtime       | varchar(40) | YES  |     |         |                |
+  | duration       | varchar(20) | YES  |     |         |                |
+  | mailboxuser    | varchar(80) | YES  |     |         |                |
+  | mailboxcontext | varchar(80) | YES  |     |         |                |
+  | recording      | longblob    | YES  |     | NULL    |                |
+  | flag           | varchar(8)  | YES  |     | NULL    |                |
+  +----------------+-------------+------+-----+---------+----------------+
+
+  DESCRIBE vmusers:
+
+  +-------------+------------------+------+-----+---------------------+-------+
+  | Field       | Type             | Null | Key | Default             | Extra |
+  +-------------+------------------+------+-----+---------------------+-------+
+  | uniqueid    | int(10) unsigned | NO   |     | 0                   |       |
+  | customer_id | char(64)         | NO   |     |                     |       |
+  | context     | varchar(7)       | NO   |     |                     |       |
+  | mailbox     | char(64)         | NO   |     |                     |       |
+  | password    | varchar(255)     | YES  |     | NULL                |       |
+  | fullname    | char(64)         | NO   |     |                     |       |
+  | email       | char(64)         | NO   |     |                     |       |
+  | pager       | binary(0)        | YES  |     | NULL                |       |
+  | stamp       | datetime         | YES  |     | 2008-01-01 00:00:00 |       |
+  +-------------+------------------+------+-----+---------------------+-------+
+
+== Installation
+
+Copy lib/config.rb.sample to lib/config.rb and edit it to match your database configuration.
+
+Start the application
+
+  run ruby voicemail_api.rb
+
+The API is accessible at :
+
+  http://localhost:4567/voicemails
+
+== TODO
+* Add update/destroy support.
+* Possibility to move voicemails from one folder to another.
+* Mark/unmark voicemails as read.
+* better specs

@@ -1,0 +1,10 @@
+configure do
+  # config stuff for you Sinatra app
+  ActiveRecord::Base.establish_connection(
+    :adapter => 'mysql',
+    :database => 'asterisk',
+    :host => 'localhost',
+    :username => 'foo',
+    :password => 'bar'
+  )
+end
